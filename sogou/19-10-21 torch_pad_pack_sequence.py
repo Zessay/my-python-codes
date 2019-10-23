@@ -5,7 +5,7 @@ from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 
-def pad_sequence(vector_seqs, embeded):
+def pack_sequence(vector_seqs, embeded):
     '''
     vector_seqs是数值化之后的输入，形状是[batch, *]
     里面各个句子的长度可以是不一致的
@@ -34,7 +34,7 @@ def pad_sequence(vector_seqs, embeded):
     return packed_input, perm_idx
 
 
-def unpad_sequence(packed_output, perm_idx):
+def unpack_sequence(packed_output, perm_idx):
     '''
     packed_output是输出，perm_idx是重排序之后的每个位置的原索引
     '''
@@ -60,9 +60,9 @@ def test():
 
     # 对序列进行向量化
     vectorized_seqs = [[vocab.index(tok) for tok in seq] for seq in seqs]
-    packed_input, perm_idx = pad_sequence(vectorized_seqs, embeded)
+    packed_input, perm_idx = pack_sequence(vectorized_seqs, embeded)
     
     # 将封装之后的张量输入到网络中
     packed_output, (ht, ct) = lstm(packed_input)
-    output = unpad_sequence(packed_output, perm_idx)
+    output = unpack_sequence(packed_output, perm_idx)
     print(output)
