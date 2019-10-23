@@ -8,3 +8,4 @@
 
 - 19-10-16：字符级的预处理函数，判断一个字符是否为中文、英文或者表情符号。
 
+- 19-10-21：关于torch中`packed_pad_sequence`和`pad_packed_sequence`的用法。

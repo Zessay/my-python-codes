@@ -13,10 +13,10 @@ def pad_sequence(vector_seqs, embeded):
     embeded是nn.Embedding对象
     '''
     # 获取各个序列的实际长度
-    seq_lengths = torch.LongTensor([len(seq) for seq in vectorized_seqs]).to(device)
+    seq_lengths = torch.LongTensor([len(seq) for seq in vector_seqs]).to(device)
     # 对序列进行左对齐，不满足最大长度的在末尾补0
     seq_tensor = torch.zeros((len(vector_seqs), seq_lengths.max())).long().to(device)
-    for idx, (seq, seqlen) in enumerate(zip(vectorized_seqs, seq_lengths)):
+    for idx, (seq, seqlen) in enumerate(zip(vector_seqs, seq_lengths)):
         seq_tensor[idx, :seqlen] = torch.LongTensor(seq)
     
     # 将seq_lengths按照长度递减的顺序排序
